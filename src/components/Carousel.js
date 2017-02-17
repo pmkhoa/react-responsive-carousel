@@ -352,7 +352,7 @@ module.exports = React.createClass({
             return null
         }
 
-        return <p className="carousel-status">{this.state.selectedItem + 1} of {this.props.children.length}</p>;
+        return <p className="carousel-status">{this.state.selectedItem + 1} / {this.props.children.length}</p>;
     },
 
     renderThumbs () {
