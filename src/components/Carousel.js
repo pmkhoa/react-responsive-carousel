@@ -426,6 +426,7 @@ module.exports = React.createClass({
 
         var swiperProps = {};
 
+      console.log(this.props.enableTouch);
         if (this.props.enableTouch) {
           swiperProps = {
               selectedItem: this.state.selectedItem,
@@ -474,9 +475,15 @@ module.exports = React.createClass({
                 <div className={klass.CAROUSEL(true)} style={{width: this.props.width || '100%'}}>
                     <button type="button" className={klass.ARROW_PREV(!hasPrev)} onClick={this.decrement} />
                     <div className={klass.WRAPPER(true, this.props.axis)} style={containerStyles} ref={node => this.itemsWrapper = node}>
+                      {this.props.enableTouch ?
                         <Swipe tagName="ul" {...swiperProps} allowMouseEvents={this.props.emulateTouch}>
                             { this.renderItems() }
                         </Swipe>
+                        :
+                        <ul {...swiperProps} allowMouseEvents={this.props.emulateTouch}>
+                            { this.renderItems() }
+                        </ul>
+                      }
                     </div>
                     <button type="button" className={klass.ARROW_NEXT(!hasNext)} onClick={this.increment} />
 
