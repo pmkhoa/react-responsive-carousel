@@ -30,7 +30,9 @@ module.exports = React.createClass({
         interval: React.PropTypes.number,
         swipeScrollTolerance: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string]),
         dynamicHeight: React.PropTypes.bool,
-        emulateTouch: React.PropTypes.bool
+        emulateTouch: React.PropTypes.bool,
+        enableTouch: React.PropTypes.bool,
+
     },
 
     getDefaultProps () {
@@ -48,7 +50,8 @@ module.exports = React.createClass({
             interval: 3000,
             swipeScrollTolerance: 5,
             dynamicHeight: false,
-            emulateTouch: false
+            emulateTouch: false,
+            enableTouch: true,
         }
     },
 
@@ -421,15 +424,26 @@ module.exports = React.createClass({
                 'msTransform': transformProp
         };
 
-        var swiperProps = {
-            selectedItem: this.state.selectedItem,
-            className: klass.SLIDER(true, this.state.swiping),
-            onSwipeMove: this.onSwipeMove,
-            onSwipeStart: this.onSwipeStart,
-            onSwipeEnd: this.onSwipeEnd,
-            style: itemListStyles,
-            ref: node => this.itemList = node
-        };
+        var swiperProps = {};
+
+        if (this.props.enableTouch) {
+          swiperProps = {
+              selectedItem: this.state.selectedItem,
+              className: klass.SLIDER(true, this.state.swiping),
+              onSwipeMove: this.onSwipeMove,
+              onSwipeStart: this.onSwipeStart,
+              onSwipeEnd: this.onSwipeEnd,
+              style: itemListStyles,
+              ref: node => this.itemList = node
+          };
+        } else {
+          swiperProps = {
+              selectedItem: this.state.selectedItem,
+              className: klass.SLIDER(true, this.state.swiping),
+              style: itemListStyles,
+              ref: node => this.itemList = node
+          };
+        }
 
         var containerStyles = {};
 
