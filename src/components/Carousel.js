@@ -428,7 +428,6 @@ module.exports = React.createClass({
 
         var swiperProps = {};
 
-      console.log(this.props.enableTouch);
         if (this.props.enableTouch) {
           swiperProps = {
               selectedItem: this.state.selectedItem,
