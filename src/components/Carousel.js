@@ -449,10 +449,12 @@ module.exports = React.createClass({
         var containerStyles = {};
 
         if (isHorizontal) {
+          if (this.props.enableTouch) {
             merge(swiperProps, {
                 onSwipeLeft: this.increment,
                 onSwipeRight: this.decrement
             });
+          }
 
             if (this.props.dynamicHeight) {
                 const itemHeight = this.getVariableImageHeight(this.state.selectedItem);
@@ -461,10 +463,12 @@ module.exports = React.createClass({
             }
 
         } else {
+          if (this.props.enableTouch) {
             merge(swiperProps, {
                 onSwipeUp: this.decrement,
                 onSwipeDown: this.increment
             });
+          }
 
             swiperProps.style.height = this.state.itemSize;
             containerStyles.height = this.state.itemSize;
