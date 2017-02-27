@@ -392,6 +392,8 @@ module.exports = React.createClass({
         return null;
     },
 
+    doNothing() {},
+
     render () {
         var itemsLength = this.props.children.length;
 
@@ -441,6 +443,9 @@ module.exports = React.createClass({
           swiperProps = {
               selectedItem: this.state.selectedItem,
               className: klass.SLIDER(true, this.state.swiping),
+              onSwipeMove: this.doNothing,
+              onSwipeStart: this.doNothing,
+              onSwipeEnd: this.doNothing,
               style: itemListStyles,
               ref: node => this.itemList = node
           };
@@ -453,6 +458,11 @@ module.exports = React.createClass({
             merge(swiperProps, {
                 onSwipeLeft: this.increment,
                 onSwipeRight: this.decrement
+            });
+          } else {
+            merge(swiperProps, {
+                onSwipeLeft: this.doNothing,
+                onSwipeRight: this.doNothing
             });
           }
 
@@ -468,6 +478,11 @@ module.exports = React.createClass({
                 onSwipeUp: this.decrement,
                 onSwipeDown: this.increment
             });
+          } else {
+            merge(swiperProps, {
+                onSwipeUp: this.doNothing,
+                onSwipeDown: this.doNothing
+            });
           }
 
             swiperProps.style.height = this.state.itemSize;
@@ -479,15 +494,9 @@ module.exports = React.createClass({
                 <div className={klass.CAROUSEL(true)} style={{width: this.props.width || '100%'}}>
                     <button type="button" className={klass.ARROW_PREV(!hasPrev)} onClick={this.decrement} />
                     <div className={klass.WRAPPER(true, this.props.axis)} style={containerStyles} ref={node => this.itemsWrapper = node}>
-                      {this.props.enableTouch ?
-                        <Swipe tagName="ul" {...swiperProps} allowMouseEvents={this.props.emulateTouch}>
-                            { this.renderItems() }
-                        </Swipe>
-                        :
-                        <ul {...swiperProps} allowMouseEvents={this.props.emulateTouch}>
-                            { this.renderItems() }
-                        </ul>
-                      }
+                      <Swipe tagName="ul" {...swiperProps} allowMouseEvents={this.props.emulateTouch}>
+                          { this.renderItems() }
+                      </Swipe>
                     </div>
                     <button type="button" className={klass.ARROW_NEXT(!hasNext)} onClick={this.increment} />
 
