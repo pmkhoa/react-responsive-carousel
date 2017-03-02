@@ -32,7 +32,7 @@ module.exports = React.createClass({
         dynamicHeight: React.PropTypes.bool,
         emulateTouch: React.PropTypes.bool,
         enableTouch: React.PropTypes.bool,
-
+        goNextOnClick: React.PropTypes.bool,
     },
 
     getDefaultProps () {
@@ -52,6 +52,7 @@ module.exports = React.createClass({
             dynamicHeight: false,
             emulateTouch: false,
             enableTouch: true,
+            goNextOnClick: false,
         }
     },
 
@@ -210,6 +211,10 @@ module.exports = React.createClass({
             this.setState({
                 selectedItem: index,
             });
+        }
+
+        if (this.props.goNextOnClick) {
+          this.increment();
         }
     },
 
